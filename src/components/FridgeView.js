@@ -60,7 +60,7 @@ export default class FridgeView extends Component {
         ctx.font = font;
         ctx.textBaseline = "top";
 
-        var class_names = ["orange", "carrot", "potato"];
+        var class_names = ["banana", "apple", "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "donut", "cake", "person", "bowl", "bottle" ];
         predictions.forEach(prediction => {
             const x = prediction.bbox[0];
             const y = prediction.bbox[1];
@@ -75,18 +75,10 @@ export default class FridgeView extends Component {
             const textWidth = ctx.measureText(prediction.class).width;
             const textHeight = parseInt(font, 10);
             // draw top left rectangle
-            ctx.fillRect(x, y, textWidth + 10, textHeight + 10);
-            // draw bottom left rectangle
-            //ctx.fillRect(x, y + height - textHeight, textWidth + 15, textHeight + 10);
-
-            // Draw the text last to ensure it's on top.
-            ctx.fillStyle = "#ffffff";
-
-            if (prediction.class in class_names) {
+            if (class_names.includes(prediction.class)) {
+                ctx.fillRect(x, y, textWidth + 10, textHeight + 10);
+                ctx.fillStyle = "#ffffff";
                 ctx.fillText(prediction.class, x, y);
-            }
-            else {
-                return ctx.fillText("unrecognized", x, y);
             }
             //ctx.fillText(prediction.class, x, y);
             //ctx.fillText(prediction.score.toFixed(2), x, y + height - textHeight);
