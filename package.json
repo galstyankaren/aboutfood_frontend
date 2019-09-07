@@ -6,6 +6,8 @@
     "@tensorflow-models/coco-ssd": "^2.0.0",
     "@tensorflow/tfjs": "^1.2.9",
     "@tensorflow/tfjs-node": "^1.2.9",
+    "framework7": "^4.5.0",
+    "framework7-react": "^4.5.0",
     "jsmpeg": "^1.0.0",
     "jsmpeg-player": "^3.0.1",
     "react": "^16.9.0",
