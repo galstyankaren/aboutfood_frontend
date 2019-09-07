@@ -61,7 +61,9 @@ export default class App extends Component {
     ctx.font = font;
     ctx.textBaseline = "top";
 
-    var class_names = ["banana", "appled", "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "donut", "cake", "person", "bowl", "bottle" ];
+    //we only need the following labels
+    var class_names = ["banana", "apple", "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "donut", "cake", "person", "bowl", "bottle" ];
+
     predictions.forEach(prediction => {
       const x = prediction.bbox[0];
       const y = prediction.bbox[1];
