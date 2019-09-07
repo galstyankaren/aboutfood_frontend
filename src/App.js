@@ -9,6 +9,7 @@ export default class App extends Component {
   state = {
     canPlay: false
   };
+
   // we are gonna use inline style
   styles = {
     position: "fixed",
@@ -16,11 +17,6 @@ export default class App extends Component {
     left: 150
   };
   _renderVideo = _ => {
-    //     const tf = require("@tensorflow/tfjs");
-    // const tfn = require("@tensorflow/tfjs-node");
-    // const handler = tfn.io.fileSystem("./model.json");
-    // const model = await tf.loadModel(handler);
-
     // Setup the WebSocket connection and start the player
     const canvas = document.getElementById("videoCanvas");
     const player = new JSMpeg.Player("ws://localhost:9999/", {
@@ -28,11 +24,12 @@ export default class App extends Component {
       canvas: canvas
     });
     this.setState({ canPlay: true }, () => {
-      const loadlModelPromise = cocoSsd.load();
-      // resolve all the Promises
+      const loadlModelPromise = cocoSsd.load({
+        modelUrl: "http://localhost:3000/data/model.json"
+      });
+
       Promise.all([loadlModelPromise])
         .then(values => {
-          debugger;
           this.detectFromVideoFrame(values[0], this.videoRef.current);
         })
         .catch(error => {
@@ -90,6 +87,20 @@ export default class App extends Component {
   render() {
     return (
       <div>
+        <div>
+          <canvas
+            id="videoCanvas"
+            width="1280"
+            height="720"
+            ref={this.videoRef}
+          ></canvas>
+          <canvas
+            style={this.styles}
+            ref={this.canvasRef}
+            width="1280"
+            height="720"
+          />
+        </div>
         <button
           onClick={() => {
             this._renderVideo();
@@ -97,18 +108,6 @@ export default class App extends Component {
         >
           Vigen
         </button>
-        <canvas
-          id="videoCanvas"
-          width="1280"
-          height="720"
-          ref={this.videoRef}
-        ></canvas>
-        <canvas
-          style={this.styles}
-          ref={this.canvasRef}
-          width="1280"
-          height="720"
-        />
       </div>
     );
   }
