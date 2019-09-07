@@ -3,9 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@tensorflow-models/coco-ssd": "^2.0.0",
+    "@tensorflow/tfjs": "^1.2.9",
+    "jsmpeg": "^1.0.0",
+    "jsmpeg-player": "^3.0.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-scripts": "3.1.1"
+    "react-scripts": "3.1.1",
+    "streamedian": "git://github.com/Streamedian/html5_rtsp_player.git"
   },
   "scripts": {
     "start": "react-scripts start",
