@@ -1,6 +1,7 @@
 import JSMpeg from "jsmpeg-player";
 import React, { Component } from "react";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
+import Slide from "react-reveal/Slide";
 
 export default class FridgeView extends Component {
   videoRef = React.createRef();
@@ -8,14 +9,21 @@ export default class FridgeView extends Component {
   state = {
     canPlay: false
   };
-
+  constructor(props) {
+    super(props);
+    this.state = { show: false };
+    this.handleNotification = this.handleNotification.bind(this);
+  }
+  handleNotification() {
+    this.setState({ show: true });
+  }
   // we are gonna use inline style
   styles = {
     position: "fixed",
-    //top: 150,
-    left: 0
+    top: 0
   };
-  _renderVideo = _ => {
+  componentDidMount = () => {
+    this.handleNotification();
     // Setup the WebSocket connection and start the player
     const canvas = document.getElementById("videoCanvas");
     const player = new JSMpeg.Player("ws://localhost:9999/", {
@@ -63,19 +71,18 @@ export default class FridgeView extends Component {
     var class_names = [
       "banana",
       "apple",
-      "sandwich",
       "orange",
       "broccoli",
       "carrot",
       "hot dog",
       "pizza",
       "donut",
-      "cake",
-      "person",
-      "bowl",
-      "bottle"
+      "cake"
     ];
     predictions.forEach(prediction => {
+      if (prediction.class == "broccoli") {
+        this.handleNotification();
+      }
       const x = prediction.bbox[0];
       const y = prediction.bbox[1];
       const width = prediction.bbox[2];
@@ -101,28 +108,26 @@ export default class FridgeView extends Component {
   render() {
     return (
       <div>
+        <Slide top when={this.state.show}>
+          <a href="http://localhost:8000/recepie.html">
+            <img
+              id="notification"
+              src={process.env.PUBLIC_URL + "img/notification.png"}
+              alt="notification"
+            />
+          </a>
+        </Slide>
         <div>
-          <canvas
-            id="videoCanvas"
-            width="1280"
-            height="720"
-            ref={this.videoRef}
-          ></canvas>
+          <canvas id="videoCanvas" ref={this.videoRef}></canvas>
           <canvas
             style={this.styles}
             ref={this.canvasRef}
-            width="1280"
-            height="720"
+            width="380"
+            height="742"
           />
-        </div>
 
-        <button
-          onClick={() => {
-            this._renderVideo();
-          }}
-        >
-          Vigen
-        </button>
+          <img src={process.env.PUBLIC_URL + "img/navbar.jpg"} alt="navbar" />
+        </div>
       </div>
     );
   }
